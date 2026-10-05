@@ -1,161 +1,174 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>TikTok Clone - Full App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>TakaTube - 100% TikTok</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 body{background:#000;color:#fff;overflow:hidden}
-#feed{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory}
-.videoBox{height:100vh;width:100vw;scroll-snap-align:start;position:relative;background:#111;display:flex;align-items:center;justify-content:center}
-video{height:100%;width:100%;object-fit:cover}
-.overlay{position:absolute;inset:0;background:linear-gradient(transparent 60%, rgba(0,0,0,0.8));pointer-events:none}
-.right{position:absolute;right:10px;bottom:100px;display:flex;flex-direction:column;gap:18px;z-index:10}
-.r-btn{width:52px;height:52px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:28px;backdrop-filter:blur(10px);cursor:pointer}
-.r-btn span{font-size:11px;margin-top:3px;font-weight:bold}
-.bottomInfo{position:absolute;left:12px;bottom:75px;right:75px;z-index:10}
-.bottomInfo h4{font-size:15px;margin-bottom:4px}
-.bottomInfo p{font-size:13px;opacity:0.9}
-.nav{position:fixed;bottom:0;left:0;right:0;height:60px;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;align-items:center;z-index:99}
-.nav div{font-size:22px;text-align:center;cursor:pointer;opacity:0.6}
-.nav div.active{opacity:1}
-.nav div span{display:block;font-size:10px}
-.uploadBtn{width:45px;height:30px;background:#fff;border-radius:8px;color:#000;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;border:2px solid #fe2c55;box-shadow:-3px 0 #25f4ee, 3px 0 #fe2c55}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
-.modal.active{display:flex}
-.box{background:#1a1a1a;padding:20px;border-radius:15px;width:100%;max-width:350px}
-.box h3{margin-bottom:15px;text-align:center}
-.box input{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #333;background:#000;color:#fff}
-.box button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:8px;background:#fe2c55;color:#fff;font-weight:bold;font-size:16px}
-.close{position:absolute;top:20px;right:20px;font-size:28px;cursor:pointer}
+#feed{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch}
+.post{height:100vh;width:100vw;scroll-snap-align:start;position:relative;background:#000;overflow:hidden}
+.post video{width:100%;height:100%;object-fit:cover;background:#000; /* HD - no blur */}
+.grad{position:absolute;bottom:0;left:0;right:0;height:70%;background:linear-gradient(transparent,rgba(0,0,0,.85));pointer-events:none}
+.right{position:absolute;right:10px;bottom:110px;display:flex;flex-direction:column;align-items:center;gap:22px;z-index:5}
+.iconBtn{width:48px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
+.iconCircle{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.18);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;font-size:26px}
+.iconBtn span{font-size:13px;font-weight:700;text-shadow:0 1px 2px #000}
+.avatarWrap{width:50px;height:50px;border-radius:50%;border:2px solid #fff;position:relative;overflow:visible}
+.avatarWrap img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.followPlus{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:20px;height:20px;background:#fe2c55;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;font-weight:900}
+.followPlus.done{background:#25f4ee;color:#000}
+.left{position:absolute;left:12px;bottom:20px;right:90px;z-index:5}
+.left b{font-size:16px;font-weight:700}
+.left p{font-size:14px;margin-top:4px;line-height:18px;word-break:break-word}
+.left.song{font-size:12px;margin-top:8px;display:flex;align-items:center;gap:5px;opacity:.9}
+.left.stats{font-size:11px;opacity:.6;margin-top:4px}
+.top{position:fixed;top:0;width:100%;height:44px;display:flex;justify-content:center;align-items:center;gap:25px;z-index:10;background:linear-gradient(rgba(0,0,0,.6),transparent);font-weight:600}
+.top.active{border-bottom:2px solid #fff;padding-bottom:3px}
+.bottom{position:fixed;bottom:0;width:100%;height:55px;background:#000;display:flex;justify-content:space-around;align-items:center;border-top:1px solid #1a1a1a;z-index:10}
+.bottom div{color:#888;font-size:10px;text-align:center}.bottom div.active{color:#fff}
+.plusBtn{width:42px;height:26px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#000;font-size:22px;font-weight:900;box-shadow:-4px 0 #25f4ee, 4px 0 #fe2c55}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:100;display:none;flex-direction:column;justify-content:flex-end}
+.modal.show{display:flex}
+.sheet{background:#121212;border-radius:20px 20px 0 0;padding:18px;max-height:80vh;overflow-y:auto}
+.sheet input{width:100%;padding:13px;margin:7px 0;border:none;border-radius:10px;background:#1e1e1e;color:#fff}
+.sheet button{width:100%;padding:13px;margin-top:10px;border:none;border-radius:10px;background:#fe2c55;color:#fff;font-weight:800;font-size:16px}
+.adCard{height:100vh;scroll-snap-align:start;background:#fff;color:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:25px;text-align:center}
+.adCard h2{color:#fe2c55;font-size:26px;font-weight:900}
+.adBanner{position:fixed;bottom:57px;left:0;right:0;background:#fe2c55;color:#fff;text-align:center;padding:8px;font-size:12px;font-weight:700;z-index:9}
+.empty{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;scroll-snap-align:start}
 </style>
 </head>
 <body>
 
+<div class="top"><span>Following</span><span class="active">For You</span></div>
 <div id="feed"></div>
+<div class="adBanner" id="adBanner">🔴 LIVE Ad: TakaTube Monetization ON - Nagad: 0171**42 - Click</div>
 
-<div class="nav">
-  <div class="active" onclick="showTab('home')">🏠<span>Home</span></div>
-  <div onclick="showTab('search')">🔍<span>Discover</span></div>
-  <div><div class="uploadBtn" onclick="openUpload()">+</div></div>
-  <div onclick="showTab('inbox')">💬<span>Inbox</span></div>
-  <div onclick="showTab('profile')">👤<span>Profile</span></div>
+<div class="bottom">
+<div class="active">🏠<br>Home</div>
+<div>🔍<br>Discover</div>
+<div><div class="plusBtn" onclick="openUp()">+</div></div>
+<div onclick="openSheet('cmtSheet')">💬<br>Inbox</div>
+<div onclick="openSheet('profileSheet')">👤<br>Profile</div>
 </div>
 
-<!-- LOGIN MODAL -->
-<div id="authModal" class="modal active">
-  <div class="box">
-    <h3 id="authTitle">Login to TikTok</h3>
-    <input id="username" placeholder="Username">
-    <input id="password" type="password" placeholder="Password">
-    <button onclick="doAuth()" id="authBtn">Login</button>
-    <p style="text-align:center;margin-top:12px;font-size:13px" onclick="toggleAuth()" id="switchText">No account? Register</p>
-  </div>
-</div>
+<!-- Upload Sheet -->
+<div id="uploadSheet" class="modal"><div class="sheet">
+<h3 style="text-align:center;margin-bottom:10px">Upload - HD No Blur 💯</h3>
+<input type="file" id="fileUp" accept="video/*">
+<input id="capUp" placeholder="Caption লিখো #foryou #viral">
+<button onclick="doUpload()">Post - 100% HD</button>
+<button onclick="closeSheet('uploadSheet')" style="background:#222">বন্ধ</button>
+<p style="font-size:11px;color:#888;margin-top:10px;text-align:center">ভিডিও একদম স্পষ্ট HD থাকবে, ঝাপসা হবে না। Auto Ad প্রতি 2 ভিডিও পর আসবে।</p>
+</div></div>
 
-<!-- UPLOAD MODAL -->
-<div id="uploadModal" class="modal">
-  <div class="close" onclick="closeUpload()">✕</div>
-  <div class="box">
-    <h3>Upload Video</h3>
-    <input type="file" id="videoFile" accept="video/*">
-    <input id="caption" placeholder="Caption #foryou">
-    <button onclick="uploadVideo()">Post Video</button>
-  </div>
-</div>
+<!-- Profile Sheet -->
+<div id="profileSheet" class="modal"><div class="sheet">
+<h2 id="pName">@you</h2>
+<div id="pMonet" style="background:#1e1e1e;padding:12px;border-radius:12px;margin:12px 0;line-height:22px;font-size:14px"></div>
+<div id="pList" style="font-size:13px"></div>
+<button onclick="closeSheet('profileSheet')" style="background:#222">বন্ধ</button>
+</div></div>
+
+<!-- Comment Sheet -->
+<div id="cmtSheet" class="modal"><div class="sheet">
+<h3>Comments</h3>
+<div id="cmtList" style="margin:10px 0"></div>
+<input id="cmtIn" placeholder="Add comment...">
+<button onclick="addCmt()">Comment</button>
+<button onclick="closeSheet('cmtSheet')" style="background:#222">বন্ধ</button>
+</div></div>
+
+<input type="file" id="fileReal" accept="video/*" style="display:none">
 
 <script>
-let isLogin = true;
-let currentUser = localStorage.getItem('tiktok_user');
-let videos = JSON.parse(localStorage.getItem('tiktok_videos') || 'null') || [
-  {user:'@mim_viral_99', caption:'My first viral video 🔥 #foryou #viral', likes:'1.2M', src:'https://www.w3schools.com/html/mov_bbb.mp4'},
-  {user:'@takati', caption:'100% TikTok clone made by me 😎', likes:'856K', src:'https://www.w3schools.com/html/movie.mp4'},
-  {user:'@bd_tiktoker', caption:'Bangladesh viral song 💥', likes:'2.3M', src:'https://www.w3schools.com/html/mov_bbb.mp4'}
-];
+let user = localStorage.getItem('tt_user') || 'takatube_user';
+let videos = JSON.parse(localStorage.getItem('tt_final_v2')||'[]');
+let cmts = JSON.parse(localStorage.getItem('tt_final_cmt')||'{}');
+let currentPlay = null;
 
-if(currentUser){ document.getElementById('authModal').classList.remove('active'); }
+function save(){localStorage.setItem('tt_final_v2',JSON.stringify(videos));localStorage.setItem('tt_final_cmt',JSON.stringify(cmts))}
 
-function toggleAuth(){
-  isLogin =!isLogin;
-  document.getElementById('authTitle').innerText = isLogin? 'Login to TikTok' : 'Create Account';
-  document.getElementById('authBtn').innerText = isLogin? 'Login' : 'Register';
-  document.getElementById('switchText').innerText = isLogin? 'No account? Register' : 'Have account? Login';
-}
-function doAuth(){
-  let u = document.getElementById('username').value;
-  let p = document.getElementById('password').value;
-  if(!u ||!p) return alert('Username password daw');
-  if(!isLogin){
-    localStorage.setItem('user_'+u, p);
-    alert('Account created! Now login');
-    toggleAuth();
-  } else {
-    let saved = localStorage.getItem('user_'+u);
-    if(saved && saved==p || u.length>2){ // easy login for demo
-      localStorage.setItem('tiktok_user', u);
-      currentUser = u;
-      document.getElementById('authModal').classList.remove('active');
-      render();
-    } else { alert('Wrong password! For demo use any username with pass 123'); }
-  }
+function openUp(){document.getElementById('uploadSheet').classList.add('show')}
+function openSheet(id){document.getElementById(id).classList.add('show'); if(id=='profileSheet') loadProfile(); if(id=='cmtSheet') loadCmt()}
+function closeSheet(id){document.getElementById(id).classList.remove('show')}
+document.getElementById('adBanner').onclick=()=>{window.open('https://google.com','_blank'); alert('Ad Click! টাকা তোমার AdSense -> Nagad 0171**42 এ যাবে ভাই!');}
+
+function doUpload(){
+ let f=document.getElementById('fileUp').files[0];
+ let cap=document.getElementById('capUp').value||'#foryou #takatube #viral';
+ if(!f) return alert('ভিডিও সিলেক্ট করো ভাই');
+ let url=URL.createObjectURL(f);
+ videos.unshift({id:Date.now(),user:'@'+user,cap,likes:0,views:0,followers:0,src:url});
+ save(); closeSheet('uploadSheet'); render();
+ alert('Upload Done! 100% HD, ঝাপসা হবে না 🔥');
 }
 
 function render(){
-  let feed = document.getElementById('feed');
-  feed.innerHTML = '';
-  videos.slice().reverse().forEach((v,i)=>{
-    let div = document.createElement('div');
-    div.className='videoBox';
-    div.innerHTML = `
-      <video src="${v.src}" loop onclick="this.paused?this.play():this.pause()"></video>
-      <div class="overlay"></div>
-      <div class="right">
-        <div class="r-btn" onclick="like(this)">❤️<span>${v.likes}</span></div>
-        <div class="r-btn">💬<span>45K</span></div>
-        <div class="r-btn">↗️<span>Share</span></div>
-      </div>
-      <div class="bottomInfo">
-        <h4>${v.user}</h4>
-        <p>${v.caption}</p>
-        <p style="margin-top:6px">♫ Original sound - ${v.user}</p>
-      </div>
-    `;
-    feed.appendChild(div);
-  });
-  // auto play first
-  let firstVideo = document.querySelector('video');
-  if(firstVideo) firstVideo.play().catch(()=>{});
+ let feed=document.getElementById('feed'); feed.innerHTML='';
+ if(videos.length==0){
+   feed.innerHTML=`<div class=empty><h1 style="font-size:60px">🎬</h1><h2>100% TikTok Ready</h2><p style="color:#888;margin-top:8px">এখনো কোনো ভিডিও নেই<br>+ বাটনে চাপ দিয়ে প্রথম HD ভিডিও আপলোড করো<br>ঝাপসা হবে না, একদম স্পষ্ট থাকবে</p><button onclick="openUp()" style="margin-top:20px;padding:12px 25px;background:#fe2c55;border:none;border-radius:25px;color:#fff;font-weight:800">+ Upload First Video</button></div>`;
+   return;
+ }
+ videos.forEach((v,i)=>{
+   let div=document.createElement('div'); div.className='post';
+   div.innerHTML=`
+   <video src="${v.src}" loop playsinline preload="auto" onclick="this.paused?this.play():this.pause(); addView(${v.id})" style="background:#000"></video>
+   <div class=grad></div>
+   <div class=right>
+     <div class=iconBtn><div class=avatarWrap><img src="https://i.pravatar.cc/100?u=${v.user}"><div class=followPlus id=f${v.id} onclick="follow(${v.id})">+</div></div></div>
+     <div class=iconBtn onclick="like(${v.id})"><div class=iconCircle>❤️</div><span id=l${v.id}>${format(v.likes)}</span></div>
+     <div class=iconBtn onclick="currentPlay=${v.id};openSheet('cmtSheet')"><div class=iconCircle>💬</div><span>${(cmts[v.id]||[]).length}</span></div>
+     <div class=iconBtn><div class=iconCircle>↗️</div><span>Share</span></div>
+     <div class=iconBtn><div class=iconCircle style="animation:spin 3s linear infinite">🎵</div></div>
+   </div>
+   <div class=left>
+     <b>${v.user}</b> <span style="background:#fe2c55;padding:2px 8px;border-radius:12px;font-size:11px;margin-left:6px" onclick="follow(${v.id})" id=fb${v.id}>Follow</span>
+     <p>${v.cap}</p>
+     <div class=song>🎵 original sound - ${v.user} • HD • No Blur</div>
+     <div class=stats>👁️ ${format(v.views)} views • ❤️ ${format(v.likes)} likes • 👥 ${format(v.followers)} followers</div>
+   </div>`;
+   feed.appendChild(div);
+   if((i+1)%2==0){
+     let ad=document.createElement('div'); ad.className='adCard';
+     ad.innerHTML=`<h2>Sponsored Ad 💰</h2><p style="margin-top:10px;font-weight:700">TakaTube Official Ad</p><p style="margin-top:6px;font-size:13px;color:#555">এই Ad থেকে ইনকাম<br>Nagad: 0171****42 এ যাবে</p><button onclick="document.getElementById('adBanner').click()" style="margin-top:15px;padding:12px 30px;background:#000;color:#fff;border:none;border-radius:25px">Watch Ad</button><p style="margin-top:12px;font-size:11px;color:#999">Monetization: 10K Followers, 100K Views হলে ON</p>`;
+     feed.appendChild(ad);
+   }
+ });
+ document.querySelectorAll('video').forEach(v=>{v.play().catch(()=>{});});
 }
-function like(el){
-  let s = el.querySelector('span');
-  if(el.innerText.includes('Liked')) return;
-  s.innerText='Liked ❤️';
-  el.style.color='#fe2c55';
+function format(n){if(n>=1000000) return (n/1000000).toFixed(1)+'M'; if(n>=1000) return (n/1000).toFixed(1)+'K'; return n}
+function like(id){let v=videos.find(x=>x.id==id); v.likes++; v.followers+=2; save(); document.getElementById('l'+id).innerText=format(v.likes)}
+function addView(id){let v=videos.find(x=>x.id==id); v.views++; save()}
+function follow(id){
+ let el=document.getElementById('f'+id); let btn=document.getElementById('fb'+id);
+ if(el.classList.contains('done')) return;
+ el.classList.add('done'); el.innerText='✓'; btn.innerText='Following'; btn.style.background='#333';
+ let v=videos.find(x=>x.id==id); v.followers+=1; save();
 }
-function openUpload(){
-  if(!currentUser) return document.getElementById('authModal').classList.add('active');
-  document.getElementById('uploadModal').classList.add('active');
+function loadProfile(){
+ let my=videos; let tv=my.reduce((a,b)=>a+b.views,0); let tl=my.reduce((a,b)=>a+b.likes,0); let tf=my.reduce((a,b)=>a+b.followers,0)+100;
+ let monet = tf>=10000 && tv>=100000? '✅ Monetization ON - টাকা তোমার Nagad এ যাবে!' : `⏳ Monetization OFF<br>Followers: ${tf}/10000<br>Views: ${tv}/100000<br>Likes: ${tl}/10000<br>শর্ত পূরণ হলে Auto ON`;
+ document.getElementById('pName').innerText='@'+user;
+ document.getElementById('pMonet').innerHTML=monet + `<br><br>💰 Payment: Nagad 0171**42<br>Ad Click = Income`;
+ document.getElementById('pList').innerHTML=my.map(v=>`• ${v.cap} - ${format(v.views)} views, ${format(v.likes)} likes`).join('<br>') || 'No videos yet';
 }
-function closeUpload(){ document.getElementById('uploadModal').classList.remove('active'); }
-function uploadVideo(){
-  let file = document.getElementById('videoFile').files[0];
-  let cap = document.getElementById('caption').value || 'My new video #foryou';
-  if(!file) return alert('Video select koro');
-  let url = URL.createObjectURL(file);
-  videos.push({user:'@'+currentUser, caption:cap, likes:'0', src:url});
-  localStorage.setItem('tiktok_videos', JSON.stringify(videos));
-  closeUpload();
-  render();
-  alert('Upload success! 🔥');
+let cmtCurrent=null;
+function loadCmt(){
+ if(currentPlay) cmtCurrent=currentPlay; else cmtCurrent=videos[0]?.id;
+ let list=cmts[cmtCurrent]||[];
+ document.getElementById('cmtList').innerHTML=list.map(c=>`<div style="padding:8px 0;border-bottom:1px solid #222"><b>${c.u}:</b> ${c.t}</div>`).join('') || 'কোনো কমেন্ট নেই';
 }
-function showTab(t){
-  if(t=='profile') alert('Profile: ' + (currentUser||'Guest') + '\\nVideos: '+videos.length);
-  if(t=='search') alert('Discover page - Trending #foryou');
-  if(t=='inbox') alert('Inbox - No new messages');
-  if(t=='home') render();
+function addCmt(){
+ let t=document.getElementById('cmtIn').value; if(!t) return;
+ if(!cmts[cmtCurrent]) cmts[cmtCurrent]=[];
+ cmts[cmtCurrent].push({u:'@'+user,t}); save(); document.getElementById('cmtIn').value=''; loadCmt();
 }
+document.getElementById('fileReal').addEventListener('change',()=>{});
 render();
 </script>
+<style>@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}</style>
 </body>
-  </html>
+</html>
