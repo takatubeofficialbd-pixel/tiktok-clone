@@ -3,264 +3,217 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>TikTok Clone 100% Login</title>
+<title>TikTok Clone 100% HD</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri',-apple-system,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri',sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:#000;color:#fff;overflow:hidden}
-button,input{font-family:inherit}
 
-/* LOGIN / REGISTER */
-#authPage{position:fixed;inset:0;z-index:100;background:#000;display:flex;flex-direction:column;justify-content:center;padding:24px}
-.auth-logo{font-size:32px;font-weight:900;text-align:center;margin-bottom:6px}
-.auth-logo span:first-child{color:#fff}
-.auth-logo span:last-child{color:#fe2c55}
-.auth-sub{color:#888;text-align:center;font-size:13px;margin-bottom:24px}
-.auth-input{width:100%;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:12px;padding:15px;color:#fff;margin-bottom:12px;font-size:14px;outline:none}
-.auth-input:focus{border-color:#fe2c55}
-.auth-btn{width:100%;padding:15px;border:none;border-radius:12px;background:#fe2c55;color:#fff;font-weight:800;font-size:16px;margin-top:8px}
-.auth-switch{margin-top:16px;text-align:center;color:#888;font-size:13px}
-.auth-switch b{color:#fff;text-decoration:underline}
+/* AUTH */
+#auth{position:fixed;inset:0;z-index:999;background:#000;display:flex;align-items:center;justify-content:center;padding:20px}
+.auth-card{width:100%;max-width:360px}
+.logo{font-size:36px;font-weight:900;text-align:center;margin-bottom:4px;letter-spacing:-1px}
+.logo b{color:#fe2c55}
+.sub{color:#888;font-size:13px;text-align:center;margin-bottom:20px}
+.inp{width:100%;background:#1c1c1e;border:1px solid #2c2c2e;padding:14px;border-radius:12px;color:#fff;margin-bottom:10px;font-size:14px;outline:none}
+.inp:focus{border-color:#fe2c55}
+.btn-main{width:100%;padding:14px;background:#fe2c55;border:none;border-radius:12px;color:#fff;font-weight:800;font-size:16px;margin-top:6px}
+.switch{margin-top:14px;text-align:center;color:#777;font-size:13px}
+.switch b{color:#fff}
 
 /* APP */
-#app{display:none;height:100vh}
-.top-bar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:center;gap:25px;padding:12px 0;background:linear-gradient(180deg,rgba(0,0,0,.8),transparent)}
-.top-bar span{color:#8a8a8a;font-weight:600;font-size:15px;padding-bottom:4px;border-bottom:2px solid transparent}
-.top-bar span.active{color:#fff;border-color:#fff}
-#feed{height:100vh;width:100vw;overflow-y:scroll;scroll-snap-type:y mandatory}
-#feed::-webkit-scrollbar{display:none}
+#app{display:none;height:100vh;position:relative}
+.top{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:center;gap:26px;padding:12px 0;background:linear-gradient(180deg,rgba(0,0,0,.7),transparent)}
+.top span{color:#8a8a8a;font-weight:600;font-size:15px;padding-bottom:3px;border-bottom:2px solid transparent}
+.top span.on{color:#fff;border-color:#fff}
+.feed{height:100vh;width:100vw;overflow-y:scroll;scroll-snap-type:y mandatory}
+.feed::-webkit-scrollbar{display:none}
 .post{height:100vh;width:100vw;scroll-snap-align:start;position:relative;background:#000}
-.post video{width:100%;height:100%;object-fit:cover}
-.right{position:absolute;right:10px;bottom:95px;display:flex;flex-direction:column;gap:18px;align-items:center;z-index:10}
-.r-icon{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.15);display:grid;place-items:center;font-size:22px}
-.r-count{font-size:11px;font-weight:700;margin-top:3px}
-.bottom-info{position:absolute;left:12px;right:75px;bottom:85px;z-index:10}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:72px;background:#000;border-top:1px solid #1a1a1a;display:flex;justify-content:space-around;align-items:center;z-index:30;padding-bottom:6px}
-.nav{font-size:10px;color:#777;display:flex;flex-direction:column;align-items:center;gap:3px}
-.nav.active{color:#fff}
+.post video{width:100%;height:100%;object-fit:cover;image-rendering:-webkit-optimize-contrast}
+.right{position:absolute;right:10px;bottom:100px;z-index:10;display:flex;flex-direction:column;align-items:center;gap:18px}
+.icon{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center;font-size:22px;backdrop-filter:blur(6px)}
+.icon img{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid #fff}
+.cnt{font-size:11px;font-weight:700;margin-top:4px}
+.bottom{position:absolute;left:12px;right:80px;bottom:86px;z-index:10}
+.bottom b{font-size:15px}
+.cap{font-size:13px;margin-top:4px;line-height:17px}
+.music{font-size:12px;margin-top:6px;display:flex;gap:6px;align-items:center;color:#fff}
+.music i{animation:spin 3s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.nav{position:fixed;bottom:0;left:0;right:0;height:70px;background:#000;border-top:1px solid #1a1a1a;display:flex;justify-content:space-around;align-items:center;z-index:30;padding-bottom:6px}
 .nav i{font-size:20px}
-.plus{width:46px;height:28px;background:#fff;border-radius:8px;display:grid;place-items:center;box-shadow:5px 0 0 #25f4ee, -5px 0 0 #fe2c55}
+.nav-item{color:#777;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.nav-item.on{color:#fff}
+.plus{width:46px;height:28px;background:#fff;border-radius:8px;display:grid;place-items:center;box-shadow:5px 0 0 #25f4ee,-5px 0 0 #fe2c55}
 .plus i{color:#000;font-size:16px}
 
-/* PROFILE EDIT */
-#profile{position:fixed;inset:0;background:#000;z-index:40;display:none;overflow-y:auto}
-.p-top{padding:40px 16px 16px;text-align:center}
-.p-avatar-wrap{position:relative;width:96px;height:96px;margin:0 auto}
-.p-avatar{width:96px;height:96px;border-radius:50%;object-fit:cover;border:2px solid #333}
-.p-avatar-edit{position:absolute;bottom:0;right:0;width:28px;height:28px;background:#fe2c55;border-radius:50%;display:grid;place-items:center;font-size:12px;border:2px solid #000}
-.p-name{margin-top:10px;font-weight:800;font-size:18px;display:flex;justify-content:center;gap:6px;align-items:center}
-.p-name i{color:#aaa;font-size:14px}
-.p-bio{font-size:12px;color:#aaa;margin-top:4px}
-.p-stats{display:flex;justify-content:center;gap:36px;margin:16px 0;font-size:13px;color:#aaa}
-.p-stats b{color:#fff;display:block;font-size:16px;text-align:center}
-.edit-box{padding:0 16px}
-.edit-box input{background:#1c1c1e;border:1px solid #2c2c2e;border-radius:10px;padding:12px;width:100%;color:#fff;margin-bottom:10px}
-.p-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:16px}
-.p-item{aspect-ratio:3/4;background:#111;position:relative;overflow:hidden}
-.p-item video{width:100%;height:100%;object-fit:cover}
-.p-view{position:absolute;bottom:4px;left:4px;background:rgba(0,0,0,.6);padding:2px 6px;border-radius:4px;font-size:11px}
+/* PROFILE */
+#profile{position:fixed;inset:0;z-index:40;background:#121212;display:none;overflow-y:auto}
+.p-head{padding:40px 16px 14px;text-align:center}
+.avatar-wrap{position:relative;width:96px;height:96px;margin:0 auto}
+.avatar-wrap img{width:96px;height:96px;border-radius:50%;object-fit:cover;border:2px solid #333}
+.edit-cam{position:absolute;bottom:0;right:0;width:28px;height:28px;background:#fe2c55;border-radius:50%;display:grid;place-items:center;border:2px solid #000;font-size:12px}
+.p-name{font-weight:800;margin-top:10px;font-size:18px}
+.p-name i{font-size:13px;color:#aaa;margin-left:6px}
+.p-sub{font-size:11px;color:#aaa;margin-top:4px}
+.stats{display:flex;justify-content:center;gap:36px;margin:14px 0}
+.stats div{font-size:12px;color:#aaa;text-align:center}
+.stats b{display:block;color:#fff;font-size:16px}
+.editBox{padding:0 16px;display:none}
+.editBox input{width:100%;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:10px;padding:12px;color:#fff;margin-bottom:8px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:12px}
+.g-item{aspect-ratio:3/4;background:#000;position:relative;overflow:hidden}
+.g-item video{width:100%;height:100%;object-fit:cover}
+.g-view{position:absolute;left:4px;bottom:4px;background:rgba(0,0,0,.6);padding:2px 6px;border-radius:4px;font-size:11px;display:flex;gap:4px;align-items:center}
 
-/* CAMERA MODAL */
-#cameraModal{position:fixed;inset:0;background:#000;z-index:60;display:none;flex-direction:column}
-.cam-top{flex:1;position:relative;background:#000}
-.cam-top video{width:100%;height:100%;object-fit:cover}
-.cam-bottom{height:38%;background:#111;padding:10px}
-.cam-actions{display:flex;justify-content:center;gap:30px;align-items:center;margin-top:10px}
-.rec-btn{width:70px;height:70px;border-radius:50%;border:4px solid #fe2c55;display:grid;place-items:center}
-.rec-btn div{width:52px;height:52px;background:#fe2c55;border-radius:50%}
-.gallery-input{margin-top:12px;background:#1c1c1e;border-radius:10px;padding:10px;text-align:center;color:#aaa;font-size:13px}
+/* CAMERA MODAL - 100% TIKTOK */
+#cam{position:fixed;inset:0;z-index:60;background:#000;display:none;flex-direction:column}
+.cam-v{flex:1;position:relative;background:#000}
+.cam-v video{width:100%;height:100%;object-fit:cover}
+.cam-b{height:40%;background:#111;padding:12px}
+.rec-row{display:flex;justify-content:center;align-items:center;gap:32px;margin-top:8px}
+.rec{width:72px;height:72px;border-radius:50%;border:4px solid #fe2c55;display:grid;place-items:center}
+.rec div{width:54px;height:54px;background:#fe2c55;border-radius:50%}
+.gal-btn{width:100%;background:#1c1c1e;padding:12px;border-radius:10px;text-align:center;color:#aaa;font-size:13px;margin-top:14px}
 </style>
 </head>
 <body>
 
-<!-- AUTH PAGE -->
-<div id="authPage">
- <div class="auth-logo"><span>Tik</span><span>Tok</span> BD</div>
- <div class="auth-sub">100% TikTok এর মতো ID খুলুন</div>
- <div id="registerForm">
-  <input class="auth-input" id="regName" placeholder="Profile Name (যেমন: TakaTube)" />
-  <input class="auth-input" id="regGmail" type="email" placeholder="Gmail (যেমন: your@gmail.com)" />
-  <input class="auth-input" id="regMobile" type="tel" placeholder="Mobile Number (01XXXXXXXXX)" />
-  <input class="auth-input" id="regPass" type="password" placeholder="Password দিন" />
-  <button class="auth-btn" onclick="doRegister()">Registration করুন</button>
-  <div class="auth-switch">ID আছে? <b onclick="switchAuth('login')">Login করুন</b></div>
- </div>
- <div id="loginForm" style="display:none">
-  <input class="auth-input" id="logGmail" placeholder="Gmail / Mobile" />
-  <input class="auth-input" id="logPass" type="password" placeholder="Password" />
-  <button class="auth-btn" onclick="doLogin()">Login</button>
-  <div class="auth-switch">ID নাই? <b onclick="switchAuth('register')">Registration করুন</b></div>
+<!-- LOGIN -->
+<div id="auth">
+ <div class="auth-card">
+  <div class="logo">TikTok <b>BD</b></div>
+  <div class="sub">100% TikTok এর মতো ID খুলুন</div>
+  <div id="reg">
+   <input class="inp" id="rName" placeholder="Profile Name">
+   <input class="inp" id="rMail" type="email" placeholder="Gmail">
+   <input class="inp" id="rMob" type="tel" placeholder="Mobile Number">
+   <input class="inp" id="rPass" type="password" placeholder="Password">
+   <button class="btn-main" onclick="register()">Registration</button>
+   <div class="switch">ID আছে? <b onclick="show('login')">Login</b></div>
+  </div>
+  <div id="log" style="display:none">
+   <input class="inp" id="lMail" placeholder="Gmail / Mobile">
+   <input class="inp" id="lPass" type="password" placeholder="Password">
+   <button class="btn-main" onclick="login()">Login</button>
+   <div class="switch">ID নাই? <b onclick="show('reg')">Registration</b></div>
+  </div>
  </div>
 </div>
 
-<!-- APP -->
+<!-- FEED -->
 <div id="app">
- <div class="top-bar"><span>Following</span><span class="active">For You</span></div>
- <div id="feed"></div>
- <div class="bottom-nav">
-  <div class="nav active"><i class="fa-solid fa-house"></i>হোম</div>
-  <div class="nav"><i class="fa-solid fa-user-group"></i>বন্ধুরা</div>
-  <div class="plus" onclick="openCamera()"><i class="fa-solid fa-plus"></i></div>
-  <div class="nav"><i class="fa-solid fa-inbox"></i>ইনবক্স</div>
-  <div class="nav" onclick="openProfile()"><i class="fa-regular fa-user"></i>প্রোফাইল</div>
+ <div class="top"><span>Following</span><span class="on">For You</span></div>
+ <div class="feed" id="feed"></div>
+ <div class="nav">
+  <div class="nav-item on"><i class="fa-solid fa-house"></i>হোম</div>
+  <div class="nav-item"><i class="fa-solid fa-user-group"></i>বন্ধুরা</div>
+  <div class="plus" onclick="openCam()"><i class="fa-solid fa-plus"></i></div>
+  <div class="nav-item"><i class="fa-solid fa-inbox"></i>ইনবক্স</div>
+  <div class="nav-item" onclick="openProfile()"><i class="fa-regular fa-user"></i>প্রোফাইল</div>
  </div>
 </div>
 
-<!-- PROFILE PAGE WITH EDIT -->
+<!-- PROFILE -->
 <div id="profile">
- <div class="p-top">
-  <div class="p-avatar-wrap" onclick="document.getElementById('avatarInput').click()">
-   <img class="p-avatar" id="profileAvatar" src="https://i.pravatar.cc/200?img=32">
-   <div class="p-avatar-edit"><i class="fa-solid fa-camera"></i></div>
-  </div>
-  <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="changeAvatar(event)">
-  <div class="p-name"><span id="profileNameDisplay">@takatubeofficialbd</span> <i class="fa-solid fa-pen" onclick="editName()"></i></div>
-  <div class="p-bio" id="profileBioDisplay">Gmail: - | Mobile: -</div>
-  <div class="p-stats"><div><b>42</b>Following</div><div><b id="fCount">0</b>Followers</div><div><b id="lCount">0</b>Likes</div></div>
-
-  <div class="edit-box" id="editBox" style="display:none">
-   <input id="editNameInput" placeholder="নতুন নাম লিখুন" />
-   <button class="auth-btn" onclick="saveName()">Save Name</button>
-  </div>
-  <button onclick="logout()" style="margin-top:12px;background:#222;color:#fff;border:none;padding:8px 16px;border-radius:20px;font-size:12px">Logout</button>
+ <div class="p-head">
+  <div class="avatar-wrap" onclick="document.getElementById('avInput').click()"><img id="avImg" src="https://i.pravatar.cc/200?img=32"><div class="edit-cam"><i class="fa-solid fa-camera"></i></div></div>
+  <input type="file" id="avInput" hidden accept="image/*" onchange="changeAv(event)">
+  <div class="p-name"><span id="pName">takatube</span><i class="fa-solid fa-pen" onclick="toggleEdit()"></i></div>
+  <div class="p-sub" id="pSub"></div>
+  <div class="stats"><div><b>42</b>Following</div><div><b id="fC">0</b>Followers</div><div><b id="lC">0</b>Likes</div></div>
+  <div class="editBox" id="editBox"><input id="eName" placeholder="নতুন নাম"><button class="btn-main" onclick="saveName()">Save</button></div>
+  <button onclick="logout()" style="margin-top:10px;background:#222;color:#fff;border:none;padding:7px 14px;border-radius:20px;font-size:11px">Logout</button>
  </div>
- <div class="p-grid" id="pGrid"></div>
+ <div class="grid" id="grid"></div>
  <div style="height:100px"></div>
- <div style="position:fixed;bottom:20px;left:0;right:0;text-align:center"><button onclick="closeProfile()" style="padding:10px 22px;border-radius:20px;border:none;font-weight:700;background:#fff;color:#000">Back to Feed</button></div>
+ <div style="position:fixed;bottom:16px;left:0;right:0;text-align:center"><button onclick="closeProfile()" style="padding:10px 20px;border-radius:20px;border:none;background:#fff;color:#000;font-weight:700">Back to Feed</button></div>
 </div>
 
-<!-- CAMERA + GALLERY MODAL -->
-<div id="cameraModal">
- <div class="cam-top">
-  <video id="camPreview" autoplay playsinline muted></video>
-  <div style="position:absolute;top:15px;left:15px;z-index:2" onclick="closeCamera()"><i class="fa-solid fa-xmark" style="font-size:22px"></i></div>
-  <div style="position:absolute;bottom:15px;left:0;right:0;display:flex;justify-content:center;gap:20px">
-   <span style="font-size:12px;background:rgba(0,0,0,.5);padding:4px 10px;border-radius:12px">Beauty</span>
-   <span style="font-size:12px;background:rgba(0,0,0,.5);padding:4px 10px;border-radius:12px">Filters</span>
-  </div>
- </div>
- <div class="cam-bottom">
-  <div class="cam-actions">
-   <i class="fa-solid fa-photo-film" style="font-size:24px;color:#aaa" onclick="document.getElementById('galleryInput').click()"></i>
-   <div class="rec-btn"><div></div></div>
-   <i class="fa-solid fa-camera-rotate" style="font-size:22px;color:#aaa"></i>
-  </div>
-  <div class="gallery-input" onclick="document.getElementById('galleryInput').click()">
-   গ্যালারি থেকে ভিডিও নিন <i class="fa-solid fa-arrow-up-from-bracket"></i>
-   <input type="file" id="galleryInput" accept="video/*" style="display:none" onchange="uploadFromGallery(event)">
-  </div>
-  <p style="text-align:center;font-size:10px;color:#666;margin-top:8px">+ এ চাপ দিলে ক্যামেরা, নিচে গ্যালারি - 100% TikTok</p>
+<!-- CAMERA + GALLERY -->
+<div id="cam">
+ <div class="cam-v"><video id="camPrev" autoplay playsinline muted></video><div onclick="closeCam()" style="position:absolute;top:14px;left:14px"><i class="fa-solid fa-xmark" style="font-size:24px"></i></div><div style="position:absolute;bottom:12px;left:0;right:0;text-align:center;display:flex;justify-content:center;gap:14px"><span style="background:rgba(0,0,0,.5);padding:4px 10px;border-radius:12px;font-size:11px">Beauty</span><span style="background:rgba(0,0,0,.5);padding:4px 10px;border-radius:12px;font-size:11px">Filters</span><span style="background:rgba(0,0,0,.5);padding:4px 10px;border-radius:12px;font-size:11px">Speed</span></div></div>
+ <div class="cam-b">
+  <div class="rec-row"><i class="fa-solid fa-photo-film" style="font-size:26px;color:#aaa" onclick="document.getElementById('galInput').click()"></i><div class="rec"><div></div></div><i class="fa-solid fa-camera-rotate" style="font-size:22px;color:#aaa"></i></div>
+  <div class="gal-btn" onclick="document.getElementById('galInput').click()"><i class="fa-solid fa-arrow-up-from-bracket"></i> গ্যালারি থেকে ভিডিও নিন<input type="file" id="galInput" hidden accept="video/*" onchange="fromGal(event)"></div>
+  <p style="text-align:center;color:#666;font-size:10px;margin-top:8px">+ এ চাপ দিলে ক্যামেরা, নিচে গ্যালারি - 100% TikTok</p>
  </div>
 </div>
 
 <script>
-let currentUser = JSON.parse(localStorage.getItem('tt_user')||'null');
-let videos = JSON.parse(localStorage.getItem('tt_v12')||'null') || [
- {url:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',views:0,likes:0},
-];
+let user=JSON.parse(localStorage.getItem('tt_user')||'null');
+let vids=JSON.parse(localStorage.getItem('tt_final')||'null')||[{url:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',views:0,likes:0,id:1},{url:'https://www.w3schools.com/html/mov_bbb.mp4',views:0,likes:0,id:2}];
+let viewedSet=new Set(JSON.parse(localStorage.getItem('tt_viewed')||'[]'));
 
-function switchAuth(t){
- document.getElementById('registerForm').style.display = t==='register'?'block':'none';
- document.getElementById('loginForm').style.display = t==='login'?'block':'none';
+function show(t){document.getElementById('reg').style.display=t==='reg'?'block':'none';document.getElementById('log').style.display=t==='login'?'block':'none'}
+function register(){
+ let n=document.getElementById('rName').value.trim(), m=document.getElementById('rMail').value.trim(), mo=document.getElementById('rMob').value.trim(), p=document.getElementById('rPass').value.trim();
+ if(!n||!m||!mo||!p){alert('সব ঘর পূরণ করো ভাই');return}
+ if(!m.includes('@')){alert('Gmail ঠিক দাও');return}
+ user={name:n,gmail:m,mobile:mo,pass:p,avatar:'https://i.pravatar.cc/200?img=32',id:Date.now()};
+ let users=JSON.parse(localStorage.getItem('tt_users')||'[]'); users.push(user); localStorage.setItem('tt_users',JSON.stringify(users)); localStorage.setItem('tt_user',JSON.stringify(user)); start();
 }
-function doRegister(){
- const name=document.getElementById('regName').value.trim();
- const gmail=document.getElementById('regGmail').value.trim();
- const mobile=document.getElementById('regMobile').value.trim();
- const pass=document.getElementById('regPass').value.trim();
- if(!name||!gmail||!mobile||!pass){alert('সব ঘর পূরণ করো ভাই!');return}
- if(!gmail.includes('@')){alert('Gmail ঠিক দাও ভাই');return}
- currentUser={name,gmail,mobile,pass,avatar:'https://i.pravatar.cc/200?img=32',id:Date.now()};
- localStorage.setItem('tt_user',JSON.stringify(currentUser));
+function login(){
+ let gm=document.getElementById('lMail').value.trim(), p=document.getElementById('lPass').value.trim();
  let users=JSON.parse(localStorage.getItem('tt_users')||'[]');
- users.push(currentUser); localStorage.setItem('tt_users',JSON.stringify(users));
- startApp();
+ let u=users.find(x=>(x.gmail===gm||x.mobile===gm)&&x.pass===p); if(!u){alert('ভুল Gmail/Password');return}
+ user=u; localStorage.setItem('tt_user',JSON.stringify(user)); start();
 }
-function doLogin(){
- const gmail=document.getElementById('logGmail').value.trim();
- const pass=document.getElementById('logPass').value.trim();
- let users=JSON.parse(localStorage.getItem('tt_users')||'[]');
- let u=users.find(x=>(x.gmail===gmail||x.mobile===gmail)&&x.pass===pass);
- if(!u){alert('Gmail / Password ভুল!');return}
- currentUser=u; localStorage.setItem('tt_user',JSON.stringify(u)); startApp();
-}
-function startApp(){
- if(!currentUser){return}
- document.getElementById('authPage').style.display='none';
- document.getElementById('app').style.display='block';
- document.getElementById('profileNameDisplay').innerText='@'+currentUser.name;
- document.getElementById('profileBioDisplay').innerText=`Gmail: ${currentUser.gmail} | Mobile: ${currentUser.mobile}`;
- document.getElementById('profileAvatar').src=currentUser.avatar;
+function start(){
+ if(!user)return;
+ document.getElementById('auth').style.display='none'; document.getElementById('app').style.display='block';
+ document.getElementById('pName').innerText=user.name; document.getElementById('pSub').innerText=`${user.gmail} | ${user.mobile}`; document.getElementById('avImg').src=user.avatar;
  render();
 }
 function logout(){localStorage.removeItem('tt_user');location.reload()}
 function render(){
- const feed=document.getElementById('feed'); feed.innerHTML='';
- videos.forEach((v,i)=>{
-  const d=document.createElement('div'); d.className='post';
-  d.innerHTML=`<video src="${v.url}" loop playsinline onclick="this.paused?this.play():this.pause()"></video>
+ let feed=document.getElementById('feed'); feed.innerHTML='';
+ vids.forEach((v,i)=>{
+  let d=document.createElement('div'); d.className='post';
+  d.innerHTML=`<video src="${v.url}" loop playsinline preload="metadata" onclick="this.paused?this.play():this.pause()"></video>
   <div class="right">
-   <div><div class="r-icon"><img src="${currentUser.avatar}" style="width:100%;height:100%;border-radius:50%"></div></div>
-   <div><div class="r-icon"><i class="fa-solid fa-heart"></i></div><div class="r-count">${v.likes||0}</div></div>
-   <div><div class="r-icon"><i class="fa-solid fa-comment-dots"></i></div><div class="r-count">0</div></div>
-   <div><div class="r-icon"><i class="fa-solid fa-bookmark"></i></div><div class="r-count">0</div></div>
-   <div><div class="r-icon"><i class="fa-solid fa-share"></i></div><div class="r-count">0</div></div>
+   <div><div class="icon"><img src="${user.avatar}"></div><div style="background:#fe2c55;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;margin:-8px auto 0;font-size:10px">+</div></div>
+   <div onclick="like(${v.id})"><div class="icon"><i class="fa-solid fa-heart"></i></div><div class="cnt">${v.likes||0}</div></div>
+   <div><div class="icon"><i class="fa-solid fa-comment-dots"></i></div><div class="cnt">0</div></div>
+   <div><div class="icon"><i class="fa-solid fa-bookmark"></i></div><div class="cnt">0</div></div>
+   <div><div class="icon"><i class="fa-solid fa-share"></i></div><div class="cnt">0</div></div>
   </div>
-  <div class="bottom-info"><b>@${currentUser.name}</b><div style="font-size:13px;margin-top:4px">আমার ভিডিও ❤️ #fyp</div></div>`;
+  <div class="bottom"><b>@${user.name}</b><div class="cap">আমার ভিডিও ❤️ #fyp</div><div class="music"><i class="fa-solid fa-music"></i> original sound - TakaTube</div></div>`;
   feed.appendChild(d);
  });
- const grid=document.getElementById('pGrid'); grid.innerHTML='';
- videos.forEach(v=>{
-  const g=document.createElement('div'); g.className='p-item';
-  g.innerHTML=`<video src="${v.url}" muted></video><div class="p-view"><i class="fa-solid fa-play"></i> ${v.views||0}</div>`;
-  grid.appendChild(g);
- });
- document.getElementById('fCount').innerText=videos.length;
- document.getElementById('lCount').innerText=videos.reduce((a,b)=>a+(b.likes||0),0);
+ let grid=document.getElementById('grid'); grid.innerHTML='';
+ vids.forEach(v=>{let g=document.createElement('div');g.className='g-item';g.innerHTML=`<video src="${v.url}" muted></video><div class="g-view"><i class="fa-solid fa-play"></i> ${v.views||0}</div>`;grid.appendChild(g);});
+ document.getElementById('fC').innerText=vids.length; document.getElementById('lC').innerText=vids.reduce((a,b)=>a+(b.likes||0),0);
+
  const io=new IntersectionObserver(es=>{
   es.forEach(e=>{
    if(e.isIntersecting){
     e.target.play().catch(()=>{});
-    setTimeout(()=>{ // REAL VIEW COUNT
-     let idx=[...document.querySelectorAll('.post video')].indexOf(e.target);
-     if(idx>=0 &&!videos[idx]._viewed){ videos[idx].views=(videos[idx].views||0)+1; videos[idx]._viewed=true; localStorage.setItem('tt_v12',JSON.stringify(videos)); render(); }
-    },2000);
-   }else{e.target.pause()}
+    let idx=[...document.querySelectorAll('.post video')].indexOf(e.target);
+    if(idx>=0 &&!viewedSet.has(vids[idx].id)){
+     setTimeout(()=>{
+      if(!viewedSet.has(vids[idx].id)){
+       vids[idx].views=(vids[idx].views||0)+1; viewedSet.add(vids[idx].id);
+       localStorage.setItem('tt_final',JSON.stringify(vids)); localStorage.setItem('tt_viewed',JSON.stringify([...viewedSet])); render();
+      }
+     },2000);
+    }
+   } else {e.target.pause()}
   })
- },{threshold:.7});
+ },{threshold:.8});
  document.querySelectorAll('.post video').forEach(v=>io.observe(v));
 }
+function like(id){let v=vids.find(x=>x.id===id); if(!v)return; v.likes=(v.likes||0)+1; localStorage.setItem('tt_final',JSON.stringify(vids)); render();}
 function openProfile(){document.getElementById('profile').style.display='block'}
 function closeProfile(){document.getElementById('profile').style.display='none'}
-function editName(){document.getElementById('editBox').style.display='block';document.getElementById('editNameInput').value=currentUser.name}
-function saveName(){
- const n=document.getElementById('editNameInput').value.trim(); if(!n)return;
- currentUser.name=n; localStorage.setItem('tt_user',JSON.stringify(currentUser));
- let users=JSON.parse(localStorage.getItem('tt_users')||'[]'); let idx=users.findIndex(u=>u.id===currentUser.id); if(idx>=0){users[idx].name=n; localStorage.setItem('tt_users',JSON.stringify(users));}
- document.getElementById('profileNameDisplay').innerText='@'+n; document.getElementById('editBox').style.display='none'; render();
-}
-function changeAvatar(e){
- const file=e.target.files[0]; if(!file)return;
- const url=URL.createObjectURL(file); currentUser.avatar=url;
- localStorage.setItem('tt_user',JSON.stringify(currentUser));
- document.getElementById('profileAvatar').src=url; render();
-}
-async function openCamera(){
- document.getElementById('cameraModal').style.display='flex';
- try{ const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:true}); document.getElementById('camPreview').srcObject=s; }catch(e){console.log(e)}
-}
-function closeCamera(){
- document.getElementById('cameraModal').style.display='none';
- let v=document.getElementById('camPreview'); if(v.srcObject){v.srcObject.getTracks().forEach(t=>t.stop())}
-}
-function uploadFromGallery(e){
- const file=e.target.files[0]; if(!file)return;
- const url=URL.createObjectURL(file);
- videos.unshift({url,views:0,likes:0,_viewed:false});
- localStorage.setItem('tt_v12',JSON.stringify(videos));
- closeCamera(); render(); openProfile();
-}
-if(currentUser) startApp();
+function toggleEdit(){let b=document.getElementById('editBox'); b.style.display=b.style.display==='block'?'none':'block'; document.getElementById('eName').value=user.name}
+function saveName(){let n=document.getElementById('eName').value.trim(); if(!n)return; user.name=n; localStorage.setItem('tt_user',JSON.stringify(user)); let users=JSON.parse(localStorage.getItem('tt_users')||'[]'); let i=users.findIndex(u=>u.id===user.id); if(i>=0){users[i].name=n; localStorage.setItem('tt_users',JSON.stringify(users))} document.getElementById('pName').innerText=n; document.getElementById('editBox').style.display='none'; render();}
+function changeAv(e){let f=e.target.files[0]; if(!f)return; let u=URL.createObjectURL(f); user.avatar=u; localStorage.setItem('tt_user',JSON.stringify(user)); document.getElementById('avImg').src=u; render();}
+async function openCam(){document.getElementById('cam').style.display='flex'; try{let s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:true}); document.getElementById('camPrev').srcObject=s;}catch(err){console.log(err)}}
+function closeCam(){document.getElementById('cam').style.display='none'; let v=document.getElementById('camPrev'); if(v.srcObject)v.srcObject.getTracks().forEach(t=>t.stop())}
+function fromGal(e){let f=e.target.files[0]; if(!f)return; let url=URL.createObjectURL(f); vids.unshift({url,views:0,likes:0,id:Date.now()}); localStorage.setItem('tt_final',JSON.stringify(vids)); closeCam(); render(); openProfile();}
+if(user) start();
 </script>
 </body>
 </html>
