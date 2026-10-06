@@ -2,131 +2,149 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Akash Market - 100%</title>
-<script src="https://s3.tradingview.com/tv.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Akash Tok - Full TikTok</title>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
 <style>
-body{background:#0f0f0f;color:#fff;font-family:Arial;margin:0}
-.header{display:flex;justify-content:space-between;padding:12px;background:#1a1a1a;border-bottom:1px solid #333}
-.balance{color:#00ff88;font-weight:bold;font-size:18px}
-.container{display:flex;height:90vh}
-.chart-box{flex:3;background:#000}
-.trade-box{flex:1;background:#1a1a1a;padding:15px;border-left:1px solid #333}
-.btn{width:100%;padding:15px;margin:8px 0;border:none;border-radius:8px;font-size:16px;font-weight:bold;cursor:pointer}
-.btn-up{background:#00c853;color:#fff}
-.btn-down{background:#ff1744;color:#fff}
-.input{width:100%;padding:10px;margin:6px 0;background:#2a2a2a;border:1px solid #444;color:#fff;border-radius:5px}
-.num-box{background:#2a2a2a;padding:10px;border-radius:8px;margin:10px 0;border:1px dashed #00ff88}
+body{margin:0;background:#000;color:#fff;font-family:Arial;overflow:hidden}
+#authPage{height:100vh;display:flex;flex-direction:column;justify-content:center;padding:25px;background:#000;z-index:100;position:fixed;inset:0}
+.input{width:100%;padding:14px;background:#1a1a1a;border:1px solid #333;border-radius:10px;color:#fff;margin-top:10px;box-sizing:border-box}
+.btn{width:100%;padding:14px;background:#fe2c55;border:none;border-radius:10px;color:#fff;font-weight:bold;margin-top:12px}
+.feed{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory}
+.video-box{height:100vh;position:relative;scroll-snap-align:start;background:#111}
+video{height:100%;width:100%;object-fit:cover}
+.overlay{position:absolute;bottom:0;left:0;right:0;padding:15px;background:linear-gradient(transparent, rgba(0,0,0,0.85))}
+.right-bar{position:absolute;right:10px;bottom:140px;display:flex;flex-direction:column;gap:18px;text-align:center;z-index:2}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;padding:10px 0;z-index:10}
+.ad-box{height:100vh;scroll-snap-align:start;background:#0f0f0f;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px}
 </style>
 </head>
 <body>
-<div class="header">
-<div>🔥 AKASH EYE MARKET</div>
-<div class="balance">Balance: ৳ <span id="bal">500.00</span></div>
+
+<!-- 1. OTP LOGIN PAGE -->
+<div id="authPage">
+<h2>Akash Tok এ স্বাগতম</h2>
+<p style="color:#888">ফোন নাম্বার দিয়ে ID খুলো</p>
+<input id="phone" class="input" placeholder="+8801XXXXXXXXX" value="+880">
+<div id="recaptcha"></div>
+<button class="btn" onclick="sendOTP()">OTP পাঠাও</button>
+<input id="otp" class="input" placeholder="OTP কোড" style="display:none">
+<button id="verifyBtn" class="btn" style="display:none;background:#fff;color:#000" onclick="verifyOTP()">Verify & Login</button>
+<p style="font-size:11px;color:#555;margin-top:15px">এডের ইনকাম তোমার AdMob এ যাবে, AdMob থেকে তোমার নগদে নিবা। কোডে নগদ নাম্বার লুকানো যায় না।</p>
 </div>
 
-<div class="container">
-<div class="chart-box" id="tv_chart"></div>
-
-<div class="trade-box">
-<h3>Trade</h3>
-<input id="amount" class="input" type="number" value="200" min="200" placeholder="Amount Min 200">
-<p>Profit: 90%</p>
-<button class="btn btn-up" onclick="trade('UP')">⬆ UP</button>
-<button class="btn btn-down" onclick="trade('DOWN')">⬇ DOWN</button>
-<div id="timer" style="text-align:center;margin-top:15px;font-size:20px;color:yellow"></div>
-<hr style="margin:15px 0">
-
-<h3>Deposit (bKash/Nagad)</h3>
-<div class="num-box">
-bKash: 01713XXXXXXX<br>
-Nagad: 01945XXXXXXX<br>
-<small>Min: 200 TK</small>
+<!-- 2. MAIN APP -->
+<div id="app" style="display:none">
+<div class="feed" id="feed"></div>
+<div class="bottom-nav">
+<div onclick="document.getElementById('fileInput').click()">➕</div>
+<div>🏠 Home</div>
+<div onclick="openProfile()">👤 Profile</div>
 </div>
-<select id="method" class="input"><option>bKash</option><option>Nagad</option></select>
-<input id="depAmount" class="input" type="number" placeholder="কত টাকা পাঠাইছেন?">
-<input id="trxid" class="input" placeholder="TrxID দিন">
-<button class="btn" style="background:#00ff88;color:#000" onclick="submitDep()">Deposit Submit</button>
-<p id="depMsg" style="color:#00ff88"></p>
-
-<h4 style="margin-top:20px">History</h4>
-<div id="history" style="font-size:12px"></div>
-</div>
+<input type="file" id="fileInput" accept="video/*" style="display:none" onchange="uploadVideo(this)">
 </div>
 
 <script>
-// 1. TradingView Live Chart - BTC
-new TradingView.widget({
-"autosize": true,
-"symbol": "BINANCE:BTCUSDT",
-"interval": "1",
-"timezone": "Asia/Dhaka",
-"theme": "dark",
-"style": "1",
-"locale": "en",
-"container_id": "tv_chart"
-});
+// TODO: তোমার Firebase Config এখানে বসাও
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  appId: "YOUR_APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
 
-// 2. Trading Logic
-let balance = 500;
-let currentPrice = 0;
-let ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade');
-ws.onmessage = (e)=>{ let data=JSON.parse(e.data); currentPrice=parseFloat(data.p); }
+let confirmationResult;
 
-function trade(dir){
- let amt = parseFloat(document.getElementById('amount').value);
- if(amt < 200){ alert('সর্বনিম্ন ট্রেড 200 টাকা মামা!'); return; }
- if(amt > balance){ alert('ব্যালেন্স কম!'); return; }
- 
- let entryPrice = currentPrice;
- balance -= amt;
- updateBal();
- 
- let timeLeft = 60;
- let interval = setInterval(()=>{
-   document.getElementById('timer').innerText = dir + ' ' + timeLeft + 's | Entry: ' + entryPrice.toFixed(2);
-   timeLeft--;
-   if(timeLeft < 0){
-     clearInterval(interval);
-     let win = (dir=='UP' && currentPrice > entryPrice) || (dir=='DOWN' && currentPrice < entryPrice);
-     if(win){
-       let profit = amt * 0.90;
-       balance += amt + profit;
-       addHistory(`WIN +${profit.toFixed(0)} TK | ${dir}`);
-     } else {
-       addHistory(`LOSS -${amt} TK | ${dir}`);
-     }
-     updateBal();
-     document.getElementById('timer').innerText = win ? '✅ WIN!' : '❌ LOSS';
-   }
- },1000);
+// OTP SEND
+function sendOTP(){
+  let phone = document.getElementById('phone').value;
+  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha', {size:'invisible'});
+  auth.signInWithPhoneNumber(phone, window.recaptchaVerifier).then(res=>{
+    confirmationResult = res;
+    document.getElementById('otp').style.display='block';
+    document.getElementById('verifyBtn').style.display='block';
+    alert('OTP গেছে');
+  }).catch(e=>alert(e.message));
+}
+function verifyOTP(){
+  let code = document.getElementById('otp').value;
+  confirmationResult.confirm(code).then(user=>{
+    document.getElementById('authPage').style.display='none';
+    document.getElementById('app').style.display='block';
+    loadFeed();
+  });
 }
 
-function updateBal(){ document.getElementById('bal').innerText = balance.toFixed(2); }
-function addHistory(t){ document.getElementById('history').innerHTML = `<div>${new Date().toLocaleTimeString()} - ${t}</div>` + document.getElementById('history').innerHTML; }
-
-// 3. Deposit Logic - Manual
-let deposits = JSON.parse(localStorage.getItem('deps')||'[]');
-function submitDep(){
- let amt = document.getElementById('depAmount').value;
- let trx = document.getElementById('trxid').value;
- let method = document.getElementById('method').value;
- if(amt < 200){ alert('মিনিমাম 200 টাকা'); return; }
- if(!trx){ alert('TrxID দাও'); return; }
- // check duplicate trx
- if(deposits.find(d=>d.trx==trx)){ alert('এই TrxID আগেই ব্যবহার হইছে!'); return; }
- deposits.push({amt, trx, method, status:'pending'});
- localStorage.setItem('deps', JSON.stringify(deposits));
- document.getElementById('depMsg').innerText = 'রিকুয়েস্ট পাঠানো হয়েছে! এডমিন এপ্রুভ করলে ব্যালেন্সে যোগ হবে।';
- // Admin auto approve for demo - তুমি পরে manual করবা
- setTimeout(()=>{
-   if(confirm(`ADMIN: ${method} ${amt} TK TrxID ${trx} এপ্রুভ করবো?`)){
-     balance += parseFloat(amt);
-     updateBal();
-     alert('Approved! Balance Added');
-   }
- },1000);
+// UPLOAD VIDEO
+async function uploadVideo(input){
+  let file = input.files[0];
+  if(!file) return;
+  alert('আপলোড হচ্ছে...');
+  let ref = storage.ref('videos/'+Date.now()+'.mp4');
+  await ref.put(file);
+  let url = await ref.getDownloadURL();
+  await db.collection('videos').add({
+    url:url,
+    uid: auth.currentUser.uid,
+    phone: auth.currentUser.phoneNumber,
+    created: Date.now()
+  });
+  alert('ভিডিও আপলোড Done!');
+  loadFeed();
 }
+
+// LOAD FEED + AUTO AD
+async function loadFeed(){
+  let snap = await db.collection('videos').orderBy('created','desc').get();
+  let feed = document.getElementById('feed');
+  feed.innerHTML='';
+  let count=0;
+  snap.forEach(doc=>{
+    count++;
+    let v = doc.data();
+    // প্রতি 3 ভিডিও পর পর এড
+    if(count % 3 == 0){
+      feed.innerHTML+=`
+      <div class="ad-box">
+        <p style="color:#888">Sponsored Ad</p>
+        <div style="background:#222;width:100%;height:250px;border-radius:12px;display:flex;justify-content:center;align-items:center">
+          তোমার AdMob Ad এখানে আসবে
+          <br>Ad Unit: ca-app-pub-xxxxxxxx
+        </div>
+        <small style="color:#555;margin-top:10px">এই এডের টাকা তোমার AdMob > তোমার নগদে যাবে</small>
+      </div>`;
+    }
+    feed.innerHTML+=`
+    <div class="video-box">
+      <video src="${v.url}" loop onclick="this.paused?this.play():this.pause()"></video>
+      <div class="right-bar">
+        <div>❤️<br><small>Like</small></div>
+        <div>💬<br><small>Comment</small></div>
+        <div>🔗<br><small>Share</small></div>
+      </div>
+      <div class="overlay">
+        <b>${v.phone}</b><br>New video on Akash Tok 🔥
+      </div>
+    </div>`;
+  });
+  // Auto play observer
+  document.querySelectorAll('video').forEach(vid=>{
+    let obs = new IntersectionObserver(e=>{
+      if(e[0].isIntersecting) e[0].target.play(); else e[0].target.pause();
+    },{threshold:0.7});
+    obs.observe(vid);
+  });
+}
+
+function openProfile(){ alert('Profile: '+auth.currentUser.phoneNumber+'\nতোমার ভিডিও গুলো এখানে আসবে'); }
 </script>
 </body>
 </html>
