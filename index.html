@@ -2,218 +2,131 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>TikTok Clone 100% HD</title>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akash Market - 100%</title>
+<script src="https://s3.tradingview.com/tv.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri',sans-serif;-webkit-tap-highlight-color:transparent}
-body{background:#000;color:#fff;overflow:hidden}
-
-/* AUTH */
-#auth{position:fixed;inset:0;z-index:999;background:#000;display:flex;align-items:center;justify-content:center;padding:20px}
-.auth-card{width:100%;max-width:360px}
-.logo{font-size:36px;font-weight:900;text-align:center;margin-bottom:4px;letter-spacing:-1px}
-.logo b{color:#fe2c55}
-.sub{color:#888;font-size:13px;text-align:center;margin-bottom:20px}
-.inp{width:100%;background:#1c1c1e;border:1px solid #2c2c2e;padding:14px;border-radius:12px;color:#fff;margin-bottom:10px;font-size:14px;outline:none}
-.inp:focus{border-color:#fe2c55}
-.btn-main{width:100%;padding:14px;background:#fe2c55;border:none;border-radius:12px;color:#fff;font-weight:800;font-size:16px;margin-top:6px}
-.switch{margin-top:14px;text-align:center;color:#777;font-size:13px}
-.switch b{color:#fff}
-
-/* APP */
-#app{display:none;height:100vh;position:relative}
-.top{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:center;gap:26px;padding:12px 0;background:linear-gradient(180deg,rgba(0,0,0,.7),transparent)}
-.top span{color:#8a8a8a;font-weight:600;font-size:15px;padding-bottom:3px;border-bottom:2px solid transparent}
-.top span.on{color:#fff;border-color:#fff}
-.feed{height:100vh;width:100vw;overflow-y:scroll;scroll-snap-type:y mandatory}
-.feed::-webkit-scrollbar{display:none}
-.post{height:100vh;width:100vw;scroll-snap-align:start;position:relative;background:#000}
-.post video{width:100%;height:100%;object-fit:cover;image-rendering:-webkit-optimize-contrast}
-.right{position:absolute;right:10px;bottom:100px;z-index:10;display:flex;flex-direction:column;align-items:center;gap:18px}
-.icon{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center;font-size:22px;backdrop-filter:blur(6px)}
-.icon img{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid #fff}
-.cnt{font-size:11px;font-weight:700;margin-top:4px}
-.bottom{position:absolute;left:12px;right:80px;bottom:86px;z-index:10}
-.bottom b{font-size:15px}
-.cap{font-size:13px;margin-top:4px;line-height:17px}
-.music{font-size:12px;margin-top:6px;display:flex;gap:6px;align-items:center;color:#fff}
-.music i{animation:spin 3s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.nav{position:fixed;bottom:0;left:0;right:0;height:70px;background:#000;border-top:1px solid #1a1a1a;display:flex;justify-content:space-around;align-items:center;z-index:30;padding-bottom:6px}
-.nav i{font-size:20px}
-.nav-item{color:#777;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:2px}
-.nav-item.on{color:#fff}
-.plus{width:46px;height:28px;background:#fff;border-radius:8px;display:grid;place-items:center;box-shadow:5px 0 0 #25f4ee,-5px 0 0 #fe2c55}
-.plus i{color:#000;font-size:16px}
-
-/* PROFILE */
-#profile{position:fixed;inset:0;z-index:40;background:#121212;display:none;overflow-y:auto}
-.p-head{padding:40px 16px 14px;text-align:center}
-.avatar-wrap{position:relative;width:96px;height:96px;margin:0 auto}
-.avatar-wrap img{width:96px;height:96px;border-radius:50%;object-fit:cover;border:2px solid #333}
-.edit-cam{position:absolute;bottom:0;right:0;width:28px;height:28px;background:#fe2c55;border-radius:50%;display:grid;place-items:center;border:2px solid #000;font-size:12px}
-.p-name{font-weight:800;margin-top:10px;font-size:18px}
-.p-name i{font-size:13px;color:#aaa;margin-left:6px}
-.p-sub{font-size:11px;color:#aaa;margin-top:4px}
-.stats{display:flex;justify-content:center;gap:36px;margin:14px 0}
-.stats div{font-size:12px;color:#aaa;text-align:center}
-.stats b{display:block;color:#fff;font-size:16px}
-.editBox{padding:0 16px;display:none}
-.editBox input{width:100%;background:#1c1c1e;border:1px solid #2c2c2e;border-radius:10px;padding:12px;color:#fff;margin-bottom:8px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:12px}
-.g-item{aspect-ratio:3/4;background:#000;position:relative;overflow:hidden}
-.g-item video{width:100%;height:100%;object-fit:cover}
-.g-view{position:absolute;left:4px;bottom:4px;background:rgba(0,0,0,.6);padding:2px 6px;border-radius:4px;font-size:11px;display:flex;gap:4px;align-items:center}
-
-/* CAMERA MODAL - 100% TIKTOK */
-#cam{position:fixed;inset:0;z-index:60;background:#000;display:none;flex-direction:column}
-.cam-v{flex:1;position:relative;background:#000}
-.cam-v video{width:100%;height:100%;object-fit:cover}
-.cam-b{height:40%;background:#111;padding:12px}
-.rec-row{display:flex;justify-content:center;align-items:center;gap:32px;margin-top:8px}
-.rec{width:72px;height:72px;border-radius:50%;border:4px solid #fe2c55;display:grid;place-items:center}
-.rec div{width:54px;height:54px;background:#fe2c55;border-radius:50%}
-.gal-btn{width:100%;background:#1c1c1e;padding:12px;border-radius:10px;text-align:center;color:#aaa;font-size:13px;margin-top:14px}
+body{background:#0f0f0f;color:#fff;font-family:Arial;margin:0}
+.header{display:flex;justify-content:space-between;padding:12px;background:#1a1a1a;border-bottom:1px solid #333}
+.balance{color:#00ff88;font-weight:bold;font-size:18px}
+.container{display:flex;height:90vh}
+.chart-box{flex:3;background:#000}
+.trade-box{flex:1;background:#1a1a1a;padding:15px;border-left:1px solid #333}
+.btn{width:100%;padding:15px;margin:8px 0;border:none;border-radius:8px;font-size:16px;font-weight:bold;cursor:pointer}
+.btn-up{background:#00c853;color:#fff}
+.btn-down{background:#ff1744;color:#fff}
+.input{width:100%;padding:10px;margin:6px 0;background:#2a2a2a;border:1px solid #444;color:#fff;border-radius:5px}
+.num-box{background:#2a2a2a;padding:10px;border-radius:8px;margin:10px 0;border:1px dashed #00ff88}
 </style>
 </head>
 <body>
-
-<!-- LOGIN -->
-<div id="auth">
- <div class="auth-card">
-  <div class="logo">TikTok <b>BD</b></div>
-  <div class="sub">100% TikTok এর মতো ID খুলুন</div>
-  <div id="reg">
-   <input class="inp" id="rName" placeholder="Profile Name">
-   <input class="inp" id="rMail" type="email" placeholder="Gmail">
-   <input class="inp" id="rMob" type="tel" placeholder="Mobile Number">
-   <input class="inp" id="rPass" type="password" placeholder="Password">
-   <button class="btn-main" onclick="register()">Registration</button>
-   <div class="switch">ID আছে? <b onclick="show('login')">Login</b></div>
-  </div>
-  <div id="log" style="display:none">
-   <input class="inp" id="lMail" placeholder="Gmail / Mobile">
-   <input class="inp" id="lPass" type="password" placeholder="Password">
-   <button class="btn-main" onclick="login()">Login</button>
-   <div class="switch">ID নাই? <b onclick="show('reg')">Registration</b></div>
-  </div>
- </div>
+<div class="header">
+<div>🔥 AKASH EYE MARKET</div>
+<div class="balance">Balance: ৳ <span id="bal">500.00</span></div>
 </div>
 
-<!-- FEED -->
-<div id="app">
- <div class="top"><span>Following</span><span class="on">For You</span></div>
- <div class="feed" id="feed"></div>
- <div class="nav">
-  <div class="nav-item on"><i class="fa-solid fa-house"></i>হোম</div>
-  <div class="nav-item"><i class="fa-solid fa-user-group"></i>বন্ধুরা</div>
-  <div class="plus" onclick="openCam()"><i class="fa-solid fa-plus"></i></div>
-  <div class="nav-item"><i class="fa-solid fa-inbox"></i>ইনবক্স</div>
-  <div class="nav-item" onclick="openProfile()"><i class="fa-regular fa-user"></i>প্রোফাইল</div>
- </div>
-</div>
+<div class="container">
+<div class="chart-box" id="tv_chart"></div>
 
-<!-- PROFILE -->
-<div id="profile">
- <div class="p-head">
-  <div class="avatar-wrap" onclick="document.getElementById('avInput').click()"><img id="avImg" src="https://i.pravatar.cc/200?img=32"><div class="edit-cam"><i class="fa-solid fa-camera"></i></div></div>
-  <input type="file" id="avInput" hidden accept="image/*" onchange="changeAv(event)">
-  <div class="p-name"><span id="pName">takatube</span><i class="fa-solid fa-pen" onclick="toggleEdit()"></i></div>
-  <div class="p-sub" id="pSub"></div>
-  <div class="stats"><div><b>42</b>Following</div><div><b id="fC">0</b>Followers</div><div><b id="lC">0</b>Likes</div></div>
-  <div class="editBox" id="editBox"><input id="eName" placeholder="নতুন নাম"><button class="btn-main" onclick="saveName()">Save</button></div>
-  <button onclick="logout()" style="margin-top:10px;background:#222;color:#fff;border:none;padding:7px 14px;border-radius:20px;font-size:11px">Logout</button>
- </div>
- <div class="grid" id="grid"></div>
- <div style="height:100px"></div>
- <div style="position:fixed;bottom:16px;left:0;right:0;text-align:center"><button onclick="closeProfile()" style="padding:10px 20px;border-radius:20px;border:none;background:#fff;color:#000;font-weight:700">Back to Feed</button></div>
-</div>
+<div class="trade-box">
+<h3>Trade</h3>
+<input id="amount" class="input" type="number" value="200" min="200" placeholder="Amount Min 200">
+<p>Profit: 90%</p>
+<button class="btn btn-up" onclick="trade('UP')">⬆ UP</button>
+<button class="btn btn-down" onclick="trade('DOWN')">⬇ DOWN</button>
+<div id="timer" style="text-align:center;margin-top:15px;font-size:20px;color:yellow"></div>
+<hr style="margin:15px 0">
 
-<!-- CAMERA + GALLERY -->
-<div id="cam">
- <div class="cam-v"><video id="camPrev" autoplay playsinline muted></video><div onclick="closeCam()" style="position:absolute;top:14px;left:14px"><i class="fa-solid fa-xmark" style="font-size:24px"></i></div><div style="position:absolute;bottom:12px;left:0;right:0;text-align:center;display:flex;justify-content:center;gap:14px"><span style="background:rgba(0,0,0,.5);padding:4px 10px;border-radius:12px;font-size:11px">Beauty</span><span style="background:rgba(0,0,0,.5);padding:4px 10px;border-radius:12px;font-size:11px">Filters</span><span style="background:rgba(0,0,0,.5);padding:4px 10px;border-radius:12px;font-size:11px">Speed</span></div></div>
- <div class="cam-b">
-  <div class="rec-row"><i class="fa-solid fa-photo-film" style="font-size:26px;color:#aaa" onclick="document.getElementById('galInput').click()"></i><div class="rec"><div></div></div><i class="fa-solid fa-camera-rotate" style="font-size:22px;color:#aaa"></i></div>
-  <div class="gal-btn" onclick="document.getElementById('galInput').click()"><i class="fa-solid fa-arrow-up-from-bracket"></i> গ্যালারি থেকে ভিডিও নিন<input type="file" id="galInput" hidden accept="video/*" onchange="fromGal(event)"></div>
-  <p style="text-align:center;color:#666;font-size:10px;margin-top:8px">+ এ চাপ দিলে ক্যামেরা, নিচে গ্যালারি - 100% TikTok</p>
- </div>
+<h3>Deposit (bKash/Nagad)</h3>
+<div class="num-box">
+bKash: 01713XXXXXXX<br>
+Nagad: 01945XXXXXXX<br>
+<small>Min: 200 TK</small>
+</div>
+<select id="method" class="input"><option>bKash</option><option>Nagad</option></select>
+<input id="depAmount" class="input" type="number" placeholder="কত টাকা পাঠাইছেন?">
+<input id="trxid" class="input" placeholder="TrxID দিন">
+<button class="btn" style="background:#00ff88;color:#000" onclick="submitDep()">Deposit Submit</button>
+<p id="depMsg" style="color:#00ff88"></p>
+
+<h4 style="margin-top:20px">History</h4>
+<div id="history" style="font-size:12px"></div>
+</div>
 </div>
 
 <script>
-let user=JSON.parse(localStorage.getItem('tt_user')||'null');
-let vids=JSON.parse(localStorage.getItem('tt_final')||'null')||[{url:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',views:0,likes:0,id:1},{url:'https://www.w3schools.com/html/mov_bbb.mp4',views:0,likes:0,id:2}];
-let viewedSet=new Set(JSON.parse(localStorage.getItem('tt_viewed')||'[]'));
+// 1. TradingView Live Chart - BTC
+new TradingView.widget({
+"autosize": true,
+"symbol": "BINANCE:BTCUSDT",
+"interval": "1",
+"timezone": "Asia/Dhaka",
+"theme": "dark",
+"style": "1",
+"locale": "en",
+"container_id": "tv_chart"
+});
 
-function show(t){document.getElementById('reg').style.display=t==='reg'?'block':'none';document.getElementById('log').style.display=t==='login'?'block':'none'}
-function register(){
- let n=document.getElementById('rName').value.trim(), m=document.getElementById('rMail').value.trim(), mo=document.getElementById('rMob').value.trim(), p=document.getElementById('rPass').value.trim();
- if(!n||!m||!mo||!p){alert('সব ঘর পূরণ করো ভাই');return}
- if(!m.includes('@')){alert('Gmail ঠিক দাও');return}
- user={name:n,gmail:m,mobile:mo,pass:p,avatar:'https://i.pravatar.cc/200?img=32',id:Date.now()};
- let users=JSON.parse(localStorage.getItem('tt_users')||'[]'); users.push(user); localStorage.setItem('tt_users',JSON.stringify(users)); localStorage.setItem('tt_user',JSON.stringify(user)); start();
-}
-function login(){
- let gm=document.getElementById('lMail').value.trim(), p=document.getElementById('lPass').value.trim();
- let users=JSON.parse(localStorage.getItem('tt_users')||'[]');
- let u=users.find(x=>(x.gmail===gm||x.mobile===gm)&&x.pass===p); if(!u){alert('ভুল Gmail/Password');return}
- user=u; localStorage.setItem('tt_user',JSON.stringify(user)); start();
-}
-function start(){
- if(!user)return;
- document.getElementById('auth').style.display='none'; document.getElementById('app').style.display='block';
- document.getElementById('pName').innerText=user.name; document.getElementById('pSub').innerText=`${user.gmail} | ${user.mobile}`; document.getElementById('avImg').src=user.avatar;
- render();
-}
-function logout(){localStorage.removeItem('tt_user');location.reload()}
-function render(){
- let feed=document.getElementById('feed'); feed.innerHTML='';
- vids.forEach((v,i)=>{
-  let d=document.createElement('div'); d.className='post';
-  d.innerHTML=`<video src="${v.url}" loop playsinline preload="metadata" onclick="this.paused?this.play():this.pause()"></video>
-  <div class="right">
-   <div><div class="icon"><img src="${user.avatar}"></div><div style="background:#fe2c55;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;margin:-8px auto 0;font-size:10px">+</div></div>
-   <div onclick="like(${v.id})"><div class="icon"><i class="fa-solid fa-heart"></i></div><div class="cnt">${v.likes||0}</div></div>
-   <div><div class="icon"><i class="fa-solid fa-comment-dots"></i></div><div class="cnt">0</div></div>
-   <div><div class="icon"><i class="fa-solid fa-bookmark"></i></div><div class="cnt">0</div></div>
-   <div><div class="icon"><i class="fa-solid fa-share"></i></div><div class="cnt">0</div></div>
-  </div>
-  <div class="bottom"><b>@${user.name}</b><div class="cap">আমার ভিডিও ❤️ #fyp</div><div class="music"><i class="fa-solid fa-music"></i> original sound - TakaTube</div></div>`;
-  feed.appendChild(d);
- });
- let grid=document.getElementById('grid'); grid.innerHTML='';
- vids.forEach(v=>{let g=document.createElement('div');g.className='g-item';g.innerHTML=`<video src="${v.url}" muted></video><div class="g-view"><i class="fa-solid fa-play"></i> ${v.views||0}</div>`;grid.appendChild(g);});
- document.getElementById('fC').innerText=vids.length; document.getElementById('lC').innerText=vids.reduce((a,b)=>a+(b.likes||0),0);
+// 2. Trading Logic
+let balance = 500;
+let currentPrice = 0;
+let ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade');
+ws.onmessage = (e)=>{ let data=JSON.parse(e.data); currentPrice=parseFloat(data.p); }
 
- const io=new IntersectionObserver(es=>{
-  es.forEach(e=>{
-   if(e.isIntersecting){
-    e.target.play().catch(()=>{});
-    let idx=[...document.querySelectorAll('.post video')].indexOf(e.target);
-    if(idx>=0 &&!viewedSet.has(vids[idx].id)){
-     setTimeout(()=>{
-      if(!viewedSet.has(vids[idx].id)){
-       vids[idx].views=(vids[idx].views||0)+1; viewedSet.add(vids[idx].id);
-       localStorage.setItem('tt_final',JSON.stringify(vids)); localStorage.setItem('tt_viewed',JSON.stringify([...viewedSet])); render();
-      }
-     },2000);
-    }
-   } else {e.target.pause()}
-  })
- },{threshold:.8});
- document.querySelectorAll('.post video').forEach(v=>io.observe(v));
+function trade(dir){
+ let amt = parseFloat(document.getElementById('amount').value);
+ if(amt < 200){ alert('সর্বনিম্ন ট্রেড 200 টাকা মামা!'); return; }
+ if(amt > balance){ alert('ব্যালেন্স কম!'); return; }
+ 
+ let entryPrice = currentPrice;
+ balance -= amt;
+ updateBal();
+ 
+ let timeLeft = 60;
+ let interval = setInterval(()=>{
+   document.getElementById('timer').innerText = dir + ' ' + timeLeft + 's | Entry: ' + entryPrice.toFixed(2);
+   timeLeft--;
+   if(timeLeft < 0){
+     clearInterval(interval);
+     let win = (dir=='UP' && currentPrice > entryPrice) || (dir=='DOWN' && currentPrice < entryPrice);
+     if(win){
+       let profit = amt * 0.90;
+       balance += amt + profit;
+       addHistory(`WIN +${profit.toFixed(0)} TK | ${dir}`);
+     } else {
+       addHistory(`LOSS -${amt} TK | ${dir}`);
+     }
+     updateBal();
+     document.getElementById('timer').innerText = win ? '✅ WIN!' : '❌ LOSS';
+   }
+ },1000);
 }
-function like(id){let v=vids.find(x=>x.id===id); if(!v)return; v.likes=(v.likes||0)+1; localStorage.setItem('tt_final',JSON.stringify(vids)); render();}
-function openProfile(){document.getElementById('profile').style.display='block'}
-function closeProfile(){document.getElementById('profile').style.display='none'}
-function toggleEdit(){let b=document.getElementById('editBox'); b.style.display=b.style.display==='block'?'none':'block'; document.getElementById('eName').value=user.name}
-function saveName(){let n=document.getElementById('eName').value.trim(); if(!n)return; user.name=n; localStorage.setItem('tt_user',JSON.stringify(user)); let users=JSON.parse(localStorage.getItem('tt_users')||'[]'); let i=users.findIndex(u=>u.id===user.id); if(i>=0){users[i].name=n; localStorage.setItem('tt_users',JSON.stringify(users))} document.getElementById('pName').innerText=n; document.getElementById('editBox').style.display='none'; render();}
-function changeAv(e){let f=e.target.files[0]; if(!f)return; let u=URL.createObjectURL(f); user.avatar=u; localStorage.setItem('tt_user',JSON.stringify(user)); document.getElementById('avImg').src=u; render();}
-async function openCam(){document.getElementById('cam').style.display='flex'; try{let s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:true}); document.getElementById('camPrev').srcObject=s;}catch(err){console.log(err)}}
-function closeCam(){document.getElementById('cam').style.display='none'; let v=document.getElementById('camPrev'); if(v.srcObject)v.srcObject.getTracks().forEach(t=>t.stop())}
-function fromGal(e){let f=e.target.files[0]; if(!f)return; let url=URL.createObjectURL(f); vids.unshift({url,views:0,likes:0,id:Date.now()}); localStorage.setItem('tt_final',JSON.stringify(vids)); closeCam(); render(); openProfile();}
-if(user) start();
+
+function updateBal(){ document.getElementById('bal').innerText = balance.toFixed(2); }
+function addHistory(t){ document.getElementById('history').innerHTML = `<div>${new Date().toLocaleTimeString()} - ${t}</div>` + document.getElementById('history').innerHTML; }
+
+// 3. Deposit Logic - Manual
+let deposits = JSON.parse(localStorage.getItem('deps')||'[]');
+function submitDep(){
+ let amt = document.getElementById('depAmount').value;
+ let trx = document.getElementById('trxid').value;
+ let method = document.getElementById('method').value;
+ if(amt < 200){ alert('মিনিমাম 200 টাকা'); return; }
+ if(!trx){ alert('TrxID দাও'); return; }
+ // check duplicate trx
+ if(deposits.find(d=>d.trx==trx)){ alert('এই TrxID আগেই ব্যবহার হইছে!'); return; }
+ deposits.push({amt, trx, method, status:'pending'});
+ localStorage.setItem('deps', JSON.stringify(deposits));
+ document.getElementById('depMsg').innerText = 'রিকুয়েস্ট পাঠানো হয়েছে! এডমিন এপ্রুভ করলে ব্যালেন্সে যোগ হবে।';
+ // Admin auto approve for demo - তুমি পরে manual করবা
+ setTimeout(()=>{
+   if(confirm(`ADMIN: ${method} ${amt} TK TrxID ${trx} এপ্রুভ করবো?`)){
+     balance += parseFloat(amt);
+     updateBal();
+     alert('Approved! Balance Added');
+   }
+ },1000);
+}
 </script>
 </body>
 </html>
